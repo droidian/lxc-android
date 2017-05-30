@@ -1,0 +1,14 @@
+Source: lxc-android
+Priority: optional
+Maintainer: Bhushan Shah <bshah@kde.org>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.8
+Section: libs
+Homepage: https://github.com/Halium/lxc-android
+
+Package: lxc-android
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: lxc configuration for starting android
+ .
+ This package provides the configuration for starting android in lxc
