@@ -1,3 +1,9 @@
+lxc-android (0.1+git20171201-1) unstable; urgency=medium
+
+  * New upstream snapshot
+
+ -- JBBgameich <jbb.mail@gmx.de>  Fri, 01 Dec 2017 19:09:15 +0100
+
 lxc-android (0.1-1) xenial; urgency=medium
 
   * Initial release.
