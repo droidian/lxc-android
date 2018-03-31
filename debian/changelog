@@ -1,8 +1,8 @@
-lxc-android (0.1+git20180105-1) UNRELEASED; urgency=medium
+lxc-android (0.1+git20180331-1) UNRELEASED; urgency=medium
 
   * New upstream snapshot
 
- -- JBBgameich <jbb.mail@gmx.de>  Fri, 05 Jan 2018 14:10:42 +0100
+ -- JBBgameich <jbb.mail@gmx.de>  Sat, 31 Mar 2018 15:39:12 +0200
 
 lxc-android (0.1+git20171201-1) unstable; urgency=medium
 
