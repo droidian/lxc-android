@@ -22,6 +22,12 @@ set -e
 
 case "$1" in
     configure)
+        # Workaround for failing commands 
+        # TODO:
+        # fix properly
+        
+        set +e
+     
         # Create android users and groups
         adduser --gecos system --no-create-home --disabled-login --disabled-password system --uid 1000
         adduser --gecos radio --no-create-home --disabled-login --disabled-password radio --uid 1001
@@ -120,6 +126,12 @@ case "$1" in
             echo "User android_cache does not exist in /etc group -- must create"
             groupadd -g 2001 android_cache
         fi
+        
+        # Revert workaround for the rest of the script
+        # TODO:
+        # Remove when not needed anymore
+        
+        set -e
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
