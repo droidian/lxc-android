@@ -23,14 +23,6 @@ case "$1" in
     ;;
 
     remove|abort-install|purge)
-        rmdir /android
-        rmdir /userdata
-        rmdir /var/lib/lxc/android/rootfs
-        rmdir /var/lib/lxc/android/overrides
-        for link in cache data factory firmware persist system vendor; do
-            rm "/$link"
-        done
-
         # Remove android users and groups
         deluser system
         deluser radio

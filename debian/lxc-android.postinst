@@ -22,14 +22,6 @@ set -e
 
 case "$1" in
     configure)
-        mkdir -p /android
-        mkdir -p /userdata
-        mkdir -p /var/lib/lxc/android/rootfs
-        mkdir -p /var/lib/lxc/android/overrides
-        for link in cache data factory firmware persist system vendor; do
-            ln -sf "/android/$link" "/$link"
-        done
-
         # Create android users and groups
         adduser --gecos system --no-create-home --disabled-login --disabled-password system --uid 1000
         adduser --gecos radio --no-create-home --disabled-login --disabled-password radio --uid 1001
