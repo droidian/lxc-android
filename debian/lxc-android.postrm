@@ -18,7 +18,6 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-
 case "$1" in
     upgrade|failed-upgrade|abort-upgrade|disappear)
     ;;
@@ -31,6 +30,23 @@ case "$1" in
         for link in cache data factory firmware persist system vendor; do
             rm "/$link"
         done
+
+        # Remove android users and groups
+        deluser system
+        deluser radio
+
+        groupdel gps
+        groupdel radio
+        groupdel bluetooth
+        groupdel android_net
+        groupdel android_net2
+        groupdel android_net3
+        groupdel android_graphics
+        groupdel android_input
+        groupdel sdcard_rw
+        groupdel android_media
+        groupdel android_nvram
+        groupdel android_cache
     ;;
 
     *)
