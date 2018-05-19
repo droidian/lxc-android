@@ -28,7 +28,6 @@ case "$1" in
         deluser radio
 
         groupdel gps
-        groupdel radio
         groupdel bluetooth
         groupdel android_net
         groupdel android_net2
