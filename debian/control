@@ -5,10 +5,12 @@ Build-Depends: debhelper (>= 11)
 Standards-Version: 4.1.3
 Section: libs
 Homepage: https://github.com/Halium/lxc-android
+Vcs-Git: https://gitlab.com/debian-pm/lxc-android.git
+Vcs-Browser: https://gitlab.com/debian-pm/lxc-android
 
 Package: lxc-android
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: lxc configuration for starting android
  .
  This package provides the configuration for starting android in lxc
