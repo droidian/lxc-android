@@ -10,7 +10,7 @@ Vcs-Browser: https://gitlab.com/debian-pm/lxc-android
 
 Package: lxc-android
 Architecture: all
-Depends: lxc, ${misc:Depends}
+Depends: lxc, adduser, ${misc:Depends}
 Description: lxc configuration for starting android
  .
  This package provides the configuration for starting android in lxc
