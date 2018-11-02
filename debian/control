@@ -5,8 +5,8 @@ Build-Depends: debhelper (>= 11)
 Standards-Version: 4.1.4
 Section: libs
 Homepage: https://github.com/Halium/lxc-android
-Vcs-Git: https://gitlab.com/debian-pm/lxc-android.git
-Vcs-Browser: https://gitlab.com/debian-pm/lxc-android
+Vcs-Git: https://gitlab.com/debian-pm/halium/lxc-android.git
+Vcs-Browser: https://gitlab.com/debian-pm/halium/lxc-android
 
 Package: lxc-android
 Architecture: all
