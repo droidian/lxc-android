@@ -1,8 +1,14 @@
-lxc-android (0.1+git20180723-2) UNRELEASED; urgency=medium
+lxc-android (0.1+git20180723-3) UNRELEASED; urgency=medium
+
+  * Apply patch to make lxc-android work with newer LXC releases
+
+ -- Jonah Brüchert <jbb@kaidan.im>  Wed, 26 Dec 2018 17:27:11 +0100
+
+lxc-android (0.1+git20180723-2) unstable; urgency=medium
 
   * Add missing dependency on cpio
 
- -- Jonah Brüchert <jbb@kaidan.im>  Mon, 23 Jul 2018 21:23:30 +0200
+ -- Jonah Brüchert <jbb@kaidan.im>  Wed, 26 Dec 2018 17:27:06 +0100
 
 lxc-android (0.1+git20180723-1) unstable; urgency=medium
 
