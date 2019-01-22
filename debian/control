@@ -1,16 +1,15 @@
 Source: lxc-android
-Priority: optional
 Maintainer: Bhushan Shah <bshah@kde.org>
-Build-Depends: debhelper (>= 11)
-Standards-Version: 4.1.4
 Section: libs
-Homepage: https://github.com/Halium/lxc-android
-Vcs-Git: https://gitlab.com/debian-pm/halium/lxc-android.git
+Priority: optional
+Build-Depends: debhelper (>= 11)
+Standards-Version: 4.3.0
 Vcs-Browser: https://gitlab.com/debian-pm/halium/lxc-android
+Vcs-Git: https://gitlab.com/debian-pm/halium/lxc-android.git
+Homepage: https://github.com/Halium/lxc-android
 
 Package: lxc-android
 Architecture: all
 Depends: adduser, cpio, lxc, ${misc:Depends}
 Description: lxc configuration for starting android
- .
  This package provides the configuration for starting android in lxc
