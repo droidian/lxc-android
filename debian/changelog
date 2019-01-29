@@ -1,8 +1,8 @@
-lxc-android (0.1+git20180723-3) UNRELEASED; urgency=medium
+lxc-android (0.1+git20190129-1) unstable; urgency=medium
 
   * Apply patch to make lxc-android work with newer LXC releases
 
- -- Jonah Brüchert <jbb@kaidan.im>  Wed, 26 Dec 2018 17:27:11 +0100
+ -- Jonah Brüchert <jbb@kaidan.im>  Tue, 29 Jan 2019 17:59:32 +0100
 
 lxc-android (0.1+git20180723-2) unstable; urgency=medium
 
