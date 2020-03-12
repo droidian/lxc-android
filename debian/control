@@ -2,8 +2,8 @@ Source: lxc-android
 Maintainer: Bhushan Shah <bshah@kde.org>
 Section: libs
 Priority: optional
-Build-Depends: debhelper (>= 11)
-Standards-Version: 4.3.0
+Build-Depends: debhelper (>= 12)
+Standards-Version: 4.5.0
 Vcs-Browser: https://gitlab.com/debian-pm/halium/lxc-android
 Vcs-Git: https://gitlab.com/debian-pm/halium/lxc-android.git
 Homepage: https://github.com/Halium/lxc-android
