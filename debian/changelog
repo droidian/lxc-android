@@ -1,3 +1,9 @@
+lxc-android (0.1+git20200315-1) unstable; urgency=medium
+
+  * New snapshot
+
+ -- Jonah Brüchert <jbb@kaidan.im>  Sun, 15 Mar 2020 21:00:02 +0100
+
 lxc-android (0.1+git20200312-1) unstable; urgency=medium
 
   * New snapshot
