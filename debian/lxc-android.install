@@ -1,6 +1,4 @@
 etc/*
-lib/systemd/system/android-mount.service
-lib/systemd/system/system.mount
-lib/udev/
-usr/lib/lxc-android/
+usr/*
 var/*
+lib/*
