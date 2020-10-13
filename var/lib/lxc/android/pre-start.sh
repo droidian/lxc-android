@@ -34,6 +34,8 @@ if [ -f "/android/system/boot/android-ramdisk.img" ]; then
     run-parts /var/lib/lxc/android/pre-start.d || true
 else
     # Halium 9
+    /usr/sbin/mount-android.sh
+
     mkdir -p /dev/__properties__
     mkdir -p /dev/socket
 fi
