@@ -53,6 +53,14 @@ if [ -e $sys_vendor ] && ! mountpoint -q -- /vendor; then
     mount $path /vendor -t $type -o $options
 fi
 
+# Bind-mount /vendor if we should. Legacy devices do not have /vendor
+# on a separate partition and we should handle that.
+if [ -n "${BIND_MOUNT_PATH}" ] && mountpoint -q -- /vendor; then
+    # Mountpoint, bind-mount. We don't use rbind as we're going
+    # to go through the fstab anyways.
+    mount -o bind /vendor "${BIND_MOUNT_PATH}/vendor"
+fi
+
 sys_persist="/sys/firmware/devicetree/base/firmware/android/fstab/persist"
 if [ -e $sys_persist ]; then
     label=$(cat $sys_persist/dev | awk -F/ '{print $NF}')
@@ -96,4 +104,10 @@ cat ${fstab} | while read line; do
     mkdir -p $2
     echo "mounting $path as $2"
     mount $path $2 -t $3 -o $(parse_mount_flags $4)
+
+    # Bind mount on rootfs if we should
+    if [ -n "${BIND_MOUNT_PATH}" ] && [[ ${2} != /mnt/* ]]; then
+        # /mnt is recursively binded via the LXC configuration
+        mount -o bind ${2} "${BIND_MOUNT_PATH}/${2}"
+    fi
 done
