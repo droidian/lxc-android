@@ -2,8 +2,4 @@
 mkdir -p /dev/cpuset
 mount none /dev/cpuset -t cpuset -o nodev,noexec,nosuid
 
-/usr/sbin/mount-android.sh
-
-if [ -d /android/metadata ]; then
-    mount -o bind /android/metadata /var/lib/lxc/android/rootfs/metadata
-fi
+BIND_MOUNT_PATH="/var/lib/lxc/android/rootfs" /usr/sbin/mount-android.sh
