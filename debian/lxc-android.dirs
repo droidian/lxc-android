@@ -1,0 +1,9 @@
+/etc/NetworkManager/conf.d
+/etc/udev/rules.d
+/lib/systemd/system
+/lib/systemd/udev/rules.d
+/usr/lib/android-tools-adbd
+/usr/lib/lxc-android
+/usr/sbin
+/var/lib/lxc/android
+/var/lib/lxc/android/rootfs
