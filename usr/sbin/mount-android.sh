@@ -111,3 +111,9 @@ cat ${fstab} | while read line; do
         mount -o bind ${2} "${BIND_MOUNT_PATH}/${2}"
     fi
 done
+
+echo "checking if system overlay exists"
+if [ -d "/usr/lib/droid-system-overlay" ]; then
+    echo "mounting android's system overlay"
+    mount -t overlay overlay -o lowerdir=/usr/lib/droid-system-overlay:/var/lib/lxc/android/rootfs/system /var/lib/lxc/android/rootfs/system
+fi
