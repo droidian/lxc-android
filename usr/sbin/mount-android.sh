@@ -117,3 +117,8 @@ if [ -d "/usr/lib/droid-system-overlay" ]; then
     echo "mounting android's system overlay"
     mount -t overlay overlay -o lowerdir=/usr/lib/droid-system-overlay:/var/lib/lxc/android/rootfs/system /var/lib/lxc/android/rootfs/system
 fi
+echo "checking if vendor overlay exists"
+if [ -d "/usr/lib/droid-vendor-overlay" ]; then
+    echo "mounting android's vendor overlay"
+    mount -t overlay overlay -o lowerdir=/usr/lib/droid-vendor-overlay:/var/lib/lxc/android/rootfs/vendor /var/lib/lxc/android/rootfs/vendor
+fi
