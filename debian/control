@@ -10,6 +10,11 @@ Homepage: https://github.com/Halium/lxc-android
 
 Package: lxc-android
 Architecture: all
-Depends: adduser, cpio, lxc, ${misc:Depends}
+Depends: adduser,
+         cpio,
+         lxc,
+         libc-bin,
+         halium-wrappers (>= 5),
+         ${misc:Depends}
 Description: lxc configuration for starting android
  This package provides the configuration for starting android in lxc
