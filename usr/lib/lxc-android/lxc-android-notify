@@ -21,9 +21,47 @@ error() {
 
 # Get Android container version
 ANDROID_SDK_VERSION=$(grep ro.build.version.sdk= ${LXC_ROOTFS}/system/build.prop | cut -d "=" -f2)
+if [ $(getconf LONG_BIT) == 32 ]; then
+	LIBDIR="lib"
+else
+	LIBDIR="lib64"
+fi
 
 # Wait for the container
 lxc-wait -n android -t 10 -s "RUNNING"
+
+if [ $ANDROID_SDK_VERSION -ge 29 ]; then
+	# Android >= 10
+	info "Detected Android 10+ container"
+
+	# Wait for apex to show up
+	HYBRIS_LD_LIBRARY_PATH="/android/system/apex/com.android.runtime.release/${LIBDIR}/bionic:/android/system/apex/com.android.runtime.debug/${LIBDIR}/bionic:/android/system/${LIBDIR}" \
+	WAITFORSERVICE_VALUE="ready" \
+		/usr/bin/waitforservice apexd.status
+
+	info "apexd ready, replicating bind-mounts"
+	for mpoint in /apex/*; do
+		# TODO: Actually determine from where the directory has been bind-mounted
+		# from, and support non-flattened apexes
+		if [ ! -d "${mpoint}" ] || [[ ${mpoint} == /apex/*@* ]]; then
+			continue
+		fi
+
+		apex=$(basename ${mpoint})
+		target="/apex/${apex}"
+		if [ "${apex}" == "com.android.runtime" ] && [ -e "/android/system/apex/com.android.runtime.debug" ]; then
+			apex="com.android.runtime.debug"
+		elif [ "${apex}" == "com.android.runtime" ] && [ -e "/android/system/apex/com.android.runtime.release" ]; then
+			apex="com.android.runtime.release"
+		fi
+		source="/android/system/apex/${apex}"
+
+		if [ -d "${source}" ]; then
+			info "Replicating bind-mount for apex ${apex}"
+			mount --bind /android/system/apex/${apex} ${target}
+		fi
+	done
+fi
 
 # Notify systemd we're done
 systemd-notify --ready --status="Container ready"

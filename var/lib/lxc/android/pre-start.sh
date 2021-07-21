@@ -36,4 +36,9 @@ else
     # Halium 9
     mkdir -p /dev/__properties__
     mkdir -p /dev/socket
+
+    # Mount a tmpfs on /apex if we should
+    if [ -e "/apex" ]; then
+        mount -t tmpfs tmpfs /apex
+    fi
 fi

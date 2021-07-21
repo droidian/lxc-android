@@ -24,3 +24,4 @@ lxc.mount.entry = sys sys sysfs nodev,noexec,nosuid 0 0
 #lxc.mount.entry = tmp tmp tmpfs nodev,noexec,nosuid 0 0
 lxc.mount.entry = /android/data data bind bind 0 0
 lxc.mount.entry = /mnt mnt bind rbind 0 0
+lxc.mount.entry = /apex apex bind bind,optional 0 0
