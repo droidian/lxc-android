@@ -1,0 +1,29 @@
+# Note! This is a full override of lxc@.service for the Halium ("android")
+# container.
+# Unfortunately the changes can't be placed as a drop-in because systemd
+# doesn't support dropping dependencies there.
+
+[Unit]
+Description=LXC Container: %i
+# Only depend on android-mount. We're pretty special and don't need
+# all the bells and whistles like lxc-net.
+After=android-mount.service
+Wants=android-mount.service
+
+[Service]
+Type=notify
+NotifyAccess=exec
+# Move the actual container start-up as an ExecStartPre.
+# While is not-entirely-correct(TM) this allows for the notification
+# script to block.
+# The container is now started in background, and lxc-android-notify
+# has the task to notify systemd when it's ready.
+ExecStartPre=/usr/bin/lxc-start -d -n android
+ExecStart=/usr/lib/lxc-android/lxc-android-notify
+KillMode=mixed
+TimeoutStopSec=120s
+ExecStop=/usr/lib/lxc-android/lxc-android-stop
+Delegate=yes
+
+[Install]
+WantedBy=multi-user.target

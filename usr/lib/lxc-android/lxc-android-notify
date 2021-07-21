@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# When this script starts, the container is starting-up.
+# On Android 10+ devices, we need to properly replicate APEX bind-mounts
+# on the host system.
+
+LXC_ROOTFS="/var/lib/lxc/android/rootfs"
+
+info() {
+	echo "I: $@"
+}
+
+warning() {
+	echo "W: $@" >&2
+}
+
+error() {
+	echo "E: $@" >&2
+	exit 1
+}
+
+# Get Android container version
+ANDROID_SDK_VERSION=$(grep ro.build.version.sdk= ${LXC_ROOTFS}/system/build.prop | cut -d "=" -f2)
+
+# Wait for the container
+lxc-wait -n android -t 10 -s "RUNNING"
+
+# Notify systemd we're done
+systemd-notify --ready --status="Container ready"
+
+# Block on lxc-wait
+lxc-wait -n android -s "STOPPED"

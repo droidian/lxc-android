@@ -1,0 +1,6 @@
+#!/bin/sh
+
+/usr/bin/setprop sys.powerctl shutdown
+lxc-wait -n android -s "STOPPED" -t 30
+
+exit 0
