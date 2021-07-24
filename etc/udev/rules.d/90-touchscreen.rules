@@ -1,0 +1,5 @@
+# Samsung TSC
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="sec_ts", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+
+# Synaptics Clearpad
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="clearpad", ENV{ID_INPUT}=="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
