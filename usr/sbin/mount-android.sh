@@ -72,6 +72,17 @@ if [ -e $sys_persist ]; then
     mount $path /mnt/vendor/persist -t $type -o $options
 fi
 
+echo "checking if system overlay exists"
+if [ -d "/usr/lib/droid-system-overlay" ]; then
+    echo "mounting android's system overlay"
+    mount -t overlay overlay -o lowerdir=/usr/lib/droid-system-overlay:/var/lib/lxc/android/rootfs/system /var/lib/lxc/android/rootfs/system
+fi
+echo "checking if vendor overlay exists"
+if [ -d "/usr/lib/droid-vendor-overlay" ]; then
+    echo "mounting android's vendor overlay"
+    mount -t overlay overlay -o lowerdir=/usr/lib/droid-vendor-overlay:/var/lib/lxc/android/rootfs/vendor /var/lib/lxc/android/rootfs/vendor
+fi
+
 # Assume there's only one fstab in vendor
 fstab=$(ls /vendor/etc/fstab*)
 [ -z "$fstab" ] && echo "fstab not found" && exit
@@ -111,14 +122,3 @@ cat ${fstab} | while read line; do
         mount -o bind ${2} "${BIND_MOUNT_PATH}/${2}"
     fi
 done
-
-echo "checking if system overlay exists"
-if [ -d "/usr/lib/droid-system-overlay" ]; then
-    echo "mounting android's system overlay"
-    mount -t overlay overlay -o lowerdir=/usr/lib/droid-system-overlay:/var/lib/lxc/android/rootfs/system /var/lib/lxc/android/rootfs/system
-fi
-echo "checking if vendor overlay exists"
-if [ -d "/usr/lib/droid-vendor-overlay" ]; then
-    echo "mounting android's vendor overlay"
-    mount -t overlay overlay -o lowerdir=/usr/lib/droid-vendor-overlay:/var/lib/lxc/android/rootfs/vendor /var/lib/lxc/android/rootfs/vendor
-fi
