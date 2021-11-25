@@ -1,0 +1,10 @@
+[Unit]
+Description=Signal the Halium container that the boot has been completed
+After=lxc@android.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/setprop sys.boot_completed 1
+
+[Install]
+WantedBy=graphical.target
