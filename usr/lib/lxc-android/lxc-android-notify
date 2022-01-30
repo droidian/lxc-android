@@ -35,7 +35,7 @@ if [ $ANDROID_SDK_VERSION -ge 29 ]; then
 	info "Detected Android 10+ container"
 
 	# Wait for apex to show up
-	HYBRIS_LD_LIBRARY_PATH="/android/system/apex/com.android.runtime.release/${LIBDIR}/bionic:/android/system/apex/com.android.runtime.debug/${LIBDIR}/bionic:/android/system/${LIBDIR}" \
+	HYBRIS_LD_LIBRARY_PATH="/android/system/apex/com.android.runtime/${LIBDIR}/bionic:/android/system/apex/com.android.runtime.release/${LIBDIR}/bionic:/android/system/apex/com.android.runtime.debug/${LIBDIR}/bionic:/android/system/${LIBDIR}" \
 	WAITFORSERVICE_VALUE="ready" \
 		/usr/bin/waitforservice apexd.status
 
