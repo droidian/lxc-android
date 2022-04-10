@@ -89,7 +89,7 @@ fstab=$(ls /vendor/etc/fstab*)
 
 echo "checking fstab $fstab for additional mount points"
 
-cat ${fstab} | while read line; do
+cat ${fstab} ${EXTRA_FSTAB} | while read line; do
     set -- $line
 
     # stop processing if we hit the "#endhalium" comment in the file
