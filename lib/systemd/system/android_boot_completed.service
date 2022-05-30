@@ -5,6 +5,7 @@ After=lxc@android.service
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/setprop sys.boot_completed 1
+ExecStart=/usr/bin/touch /run/boot-done
 
 [Install]
 WantedBy=graphical.target
