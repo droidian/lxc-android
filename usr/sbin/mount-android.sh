@@ -32,9 +32,14 @@ parse_mount_flags() {
     echo $options
 }
 
+if [ -e "/dev/disk/by-partlabel/super" ]; then
+    echo "mapping super partition"
+    dmsetup create --concise "$(parse-android-dynparts /dev/disk/by-partlabel/super)"
+fi
+
 echo "checking for vendor mount point"
 
-vendor_images="/userdata/vendor.img /var/lib/lxc/android/vendor.img"
+vendor_images="/userdata/vendor.img /var/lib/lxc/android/vendor.img /dev/mapper/dynpart-vendor"
 for image in $vendor_images; do
     if [ -e $image ]; then
         echo "mounting vendor from $image"
