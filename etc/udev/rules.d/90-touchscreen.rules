@@ -2,4 +2,11 @@
 ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="sec_ts", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
 
 # Synaptics Clearpad
-ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="clearpad", ENV{ID_INPUT}=="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="clearpad", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+
+# (FIXME) aw9523b keyboard
+ACTION=="add", KERNEL=="event[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="aw9523b", ENV{ID_INPUT}="1", ENV{ID_INPUT_KEY}="1"
+
+# Goodix-TS
+ACTION=="add", KERNEL=="event[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="goodix-ts", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+
