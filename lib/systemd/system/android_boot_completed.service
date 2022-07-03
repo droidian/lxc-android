@@ -1,6 +1,7 @@
 [Unit]
 Description=Signal the Halium container that the boot has been completed
-After=lxc@android.service
+Requires=lxc@android.service
+After=phosh.service
 
 [Service]
 Type=oneshot
