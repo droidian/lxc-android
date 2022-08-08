@@ -18,6 +18,7 @@ lxc.autodev = 0
 
 lxc.mount.entry = tmpfs dev tmpfs nosuid 0 0
 lxc.mount.entry = /dev/__properties__ dev/__properties__ bind bind,create=dir 0 0
+lxc.mount.entry = /dev/binderfs dev/binderfs bind bind,create=dir,optional 0 0
 lxc.mount.entry = /dev/socket dev/socket bind bind,create=dir 0 0
 lxc.mount.entry = proc proc proc nodev,noexec,nosuid 0 0
 lxc.mount.entry = sys sys sysfs nodev,noexec,nosuid 0 0

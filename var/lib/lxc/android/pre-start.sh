@@ -41,4 +41,11 @@ else
     if [ -e "/apex" ]; then
         mount -t tmpfs tmpfs /apex
     fi
+
+    # mount binderfs if needed
+    if [ ! -e /dev/binder ]; then
+        mkdir -p /dev/binderfs
+        mount -t binder binder /dev/binderfs -o stats=global
+        ln -s /dev/binderfs/*binder /dev
+    fi
 fi
