@@ -1,12 +1,11 @@
 [Unit]
 Description=Signal the Halium container that the boot has been completed
 Requires=lxc@android.service
-After=phosh.service
+After=lxc@android.service
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/setprop sys.boot_completed 1
-ExecStart=/usr/bin/touch /run/boot-done
 
 [Install]
 WantedBy=graphical.target

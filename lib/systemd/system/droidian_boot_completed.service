@@ -1,0 +1,11 @@
+[Unit]
+Description=Create stamp file to signal that the Droidian boot has been completed
+Requires=lxc@android.service
+After=phosh.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/touch /run/boot-done
+
+[Install]
+WantedBy=graphical.target
