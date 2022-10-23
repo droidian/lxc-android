@@ -19,6 +19,17 @@ error() {
 	exit 1
 }
 
+get_source_apex_name() {
+	NAME="$(echo ${1} | sed -E 's|\.v[0-9]+$||g')"
+
+	for choice in ${NAME} ${NAME}.release ${NAME}.debug ${NAME}.current; do
+		if [ -e "/android/system/apex/${choice}" ]; then
+			echo "${choice}"
+			break
+		fi
+	done
+}
+
 # Get Android container version
 ANDROID_SDK_VERSION=$(grep ro.build.version.sdk= ${LXC_ROOTFS}/system/build.prop | cut -d "=" -f2)
 if [ $(getconf LONG_BIT) == 32 ]; then
@@ -49,16 +60,19 @@ if [ $ANDROID_SDK_VERSION -ge 29 ]; then
 
 		apex=$(basename ${mpoint})
 		target="/apex/${apex}"
-		if [ "${apex}" == "com.android.runtime" ] && [ -e "/android/system/apex/com.android.runtime.debug" ]; then
-			apex="com.android.runtime.debug"
-		elif [ "${apex}" == "com.android.runtime" ] && [ -e "/android/system/apex/com.android.runtime.release" ]; then
-			apex="com.android.runtime.release"
+
+		source_apex=$(get_source_apex_name ${apex})
+
+		if [ -z "${source_apex}" ]; then
+			warning "Unable to finx source apex for apex ${apex}"
+			continue
 		fi
-		source="/android/system/apex/${apex}"
+
+		source="/android/system/apex/${source_apex}"
 
 		if [ -d "${source}" ]; then
 			info "Replicating bind-mount for apex ${apex}"
-			mount --bind /android/system/apex/${apex} ${target}
+			mount --bind ${source} ${target}
 		fi
 	done
 fi
