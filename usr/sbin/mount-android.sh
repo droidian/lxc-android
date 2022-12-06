@@ -39,7 +39,7 @@ fi
 
 echo "checking for vendor mount point"
 
-vendor_images="/userdata/vendor.img /var/lib/lxc/android/vendor.img /dev/mapper/dynpart-vendor"
+vendor_images="/userdata/vendor.img /var/lib/lxc/android/vendor.img /dev/mapper/dynpart-vendor /dev/mapper/dynpart-vendor${ab_slot_suffix}"
 for image in $vendor_images; do
     if [ -e $image ]; then
         echo "mounting vendor from $image"
