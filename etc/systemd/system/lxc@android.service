@@ -9,6 +9,7 @@ Description=LXC Container: %i
 # all the bells and whistles like lxc-net.
 After=android-mount.service
 Wants=android-mount.service
+ConditionPathExists=!/system-update
 
 [Service]
 Type=notify
