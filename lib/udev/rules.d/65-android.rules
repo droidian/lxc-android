@@ -15,7 +15,6 @@ SUBSYSTEM=="graphics", KERNEL=="*", SYMLINK+="graphics/%k"
 ACTION=="add", KERNEL=="event[0-9]*", GROUP="android_input", MODE="0660"
 
 # misc devices
-ACTION=="add", KERNEL=="alarm", OWNER="system", GROUP="phablet", MODE="0660"
 ACTION=="add", KERNEL=="uhid", OWNER="system", GROUP="system", MODE="0660"
 ACTION=="add", KERNEL=="mtp_usb", OWNER="root", GROUP="plugdev", MODE="0660"
 
