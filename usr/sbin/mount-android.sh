@@ -80,12 +80,20 @@ fi
 echo "checking if system overlay exists"
 if [ -d "/usr/lib/droid-system-overlay" ]; then
     echo "mounting android's system overlay"
-    mount -t overlay overlay -o lowerdir=/usr/lib/droid-system-overlay:/var/lib/lxc/android/rootfs/system /var/lib/lxc/android/rootfs/system
+    if [ $(uname -r | cut -d "." -f 1) -ge "4" ]; then
+        mount -t overlay overlay -o lowerdir=/usr/lib/droid-system-overlay:/var/lib/lxc/android/rootfs/system /var/lib/lxc/android/rootfs/system
+    else
+        mount -t overlay overlay -o lowerdir=/var/lib/lxc/android/rootfs/system,upperdir=/usr/lib/droid-system-overlay,workdir=/var/lib/lxc/android/ /var/lib/lxc/android/rootfs/system
+    fi
 fi
 echo "checking if vendor overlay exists"
 if [ -d "/usr/lib/droid-vendor-overlay" ]; then
     echo "mounting android's vendor overlay"
-    mount -t overlay overlay -o lowerdir=/usr/lib/droid-vendor-overlay:/var/lib/lxc/android/rootfs/vendor /var/lib/lxc/android/rootfs/vendor
+    if [ $(uname -r | cut -d "." -f 1) -ge "4" ]; then
+        mount -t overlay overlay -o lowerdir=/usr/lib/droid-vendor-overlay:/var/lib/lxc/android/rootfs/vendor /var/lib/lxc/android/rootfs/vendor
+    else
+        mount -t overlay overlay -o lowerdir=/var/lib/lxc/android/rootfs/vendor,upperdir=/usr/lib/droid-vendor-overlay,workdir=/var/lib/lxc/android/ /var/lib/lxc/android/rootfs/vendor
+    fi
 fi
 
 # Assume there's only one fstab in vendor
