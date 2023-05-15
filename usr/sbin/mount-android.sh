@@ -32,6 +32,16 @@ parse_mount_flags() {
     echo $options
 }
 
+if [ -n "${BIND_MOUNT_PATH}" ] && ! mountpoint -q -- "${BIND_MOUNT_PATH}"; then
+    android_images="/userdata/android-rootfs.img /var/lib/lxc/android/android-rootfs.img"
+    for image in ${android_images}; do
+        if [ -f "${image}" ]; then
+            mount "${image}" "${BIND_MOUNT_PATH}"
+            break
+        fi
+    done
+fi
+
 if [ -e "/dev/disk/by-partlabel/super" ]; then
     echo "mapping super partition"
     dmsetup create --concise "$(parse-android-dynparts /dev/disk/by-partlabel/super)"
