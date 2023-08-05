@@ -1,7 +1,14 @@
 #!/bin/bash
 
 # On systems with A/B partition layout, current slot is provided via cmdline parameter.
-ab_slot_suffix=$(grep -o 'androidboot\.slot_suffix=..' /proc/cmdline |  cut -d "=" -f2)
+if [ -e /proc/bootconfig ]; then
+    ab_slot_suffix=$(grep -o 'androidboot\.slot_suffix = ".."' /proc/bootconfig | cut -d '"' -f2)
+fi
+
+if [ -z "$ab_slot_suffix" ]; then
+    ab_slot_suffix=$(grep -o 'androidboot\.slot_suffix=..' /proc/cmdline |  cut -d "=" -f2)
+fi
+
 [ ! -z "$ab_slot_suffix" ] && echo "A/B slot system detected! Slot suffix is $ab_slot_suffix"
 
 find_partition_path() {
