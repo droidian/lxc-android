@@ -16,3 +16,5 @@ ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="fts_ts",
 # Novatek NT36xxx
 ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="NVTCapacitiveTouchScreen", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
 
+# Touchpanel ???
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="touchpanel", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
