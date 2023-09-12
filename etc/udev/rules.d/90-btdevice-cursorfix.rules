@@ -1,0 +1,5 @@
+# Rules to fix cursor from incorrectly showing up on a Bluetooth device connection
+
+# 3 Monkeys Thunder Pro
+ACTION=="add", KERNEL=="event[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="3 Monkeys Thunder Pro", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+
