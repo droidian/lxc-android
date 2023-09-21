@@ -18,5 +18,8 @@ Depends: adduser,
          parse-android-dynparts,
          dmsetup,
          ${misc:Depends}
+Replaces: udev-config-hybris
+Conflicts: udev-config-hybris
+Breaks: udev-config-hybris
 Description: lxc configuration for starting android
  This package provides the configuration for starting android in lxc
