@@ -130,7 +130,7 @@ cat ${fstab} ${EXTRA_FSTAB} | while read line; do
     ([ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]) && continue
     ([ "$2" = "/system" ] || [ "$2" = "/data" ] || [ "$2" = "/" ] \
     || [ "$2" = "auto" ] || [ "$2" = "/vendor" ] || [ "$2" = "none" ] \
-    || [ "$2" = "/misc" ]) && continue
+    || [ "$2" = "/misc" ] || [ "$2" = "/system_ext" ] || [ "$2" = "/product" ]) && continue
     ([ "$3" = "emmc" ] || [ "$3" = "swap" ] || [ "$3" = "mtd" ]) && continue
 
     label=$(echo $1 | awk -F/ '{print $NF}')
