@@ -4,10 +4,12 @@ Source: https://github.com/Halium/lxc-android
 
 Files: *
 Copyright: 2017 Halium Project & contributors
+           2020-2023, Droiian Project <info@droidian.org>
 License: GPL-2+
 
 Files: debian/*
 Copyright: 2017 Bhushan Shah <bshah@kde.org>
+           2020-2023, Droiian Project <info@droidian.org>
 License: GPL-2+
 
 License: GPL-2+
