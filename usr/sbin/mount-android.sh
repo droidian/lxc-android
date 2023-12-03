@@ -64,6 +64,14 @@ for image in $vendor_images; do
     fi
 done
 
+vendor_dlkm_images="/dev/mapper/dynpart-vendor_dlkm /dev/mapper/dynpart-vendor_dlkm${ab_slot_suffix}"
+for image in $vendor_dlkm_images; do
+    if [ -e $image ]; then
+        echo "mounting vendor_dlkm from $image"
+        mount $image /vendor_dlkm -o ro
+    fi
+done
+
 sys_vendor="/sys/firmware/devicetree/base/firmware/android/fstab/vendor"
 if [ -e $sys_vendor ] && ! mountpoint -q -- /vendor; then
     label=$(cat $sys_vendor/dev | awk -F/ '{print $NF}')
@@ -103,6 +111,7 @@ if [ -d "/usr/lib/droid-system-overlay" ]; then
         mount -t overlay overlay -o lowerdir=/var/lib/lxc/android/rootfs/system,upperdir=/usr/lib/droid-system-overlay,workdir=/var/lib/lxc/android/ /var/lib/lxc/android/rootfs/system
     fi
 fi
+
 echo "checking if vendor overlay exists"
 if [ -d "/usr/lib/droid-vendor-overlay" ]; then
     echo "mounting android's vendor overlay"
