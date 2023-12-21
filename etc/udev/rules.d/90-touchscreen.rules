@@ -19,3 +19,8 @@ ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="fts_ts",
 # Novatek NT36xxx
 ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="NVTCapacitiveTouchScreen", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
 
+# Novatek Touchscreen
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="NVT-ts", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+
+# Synaptics TCM
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="tcm-i2c", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
