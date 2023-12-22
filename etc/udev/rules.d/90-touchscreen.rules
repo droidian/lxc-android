@@ -27,3 +27,6 @@ ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="tcm-i2c"
 
 # Synaptics DSX
 ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="dsx-i2c", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+
+# OmniVision TCM
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="omnivision_tcm_touch", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
