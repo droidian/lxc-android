@@ -12,6 +12,7 @@ ACTION=="add", KERNEL=="event[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="aw9523b"
 
 # Goodix-TS
 ACTION=="add", KERNEL=="event[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="goodix-ts", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+ACTION=="add", KERNEL=="event[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="goodix_ts", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
 
 # FingerTipS
 ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="fts_ts", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
@@ -30,3 +31,6 @@ ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="dsx-i2c"
 
 # OmniVision TCM
 ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="omnivision_tcm_touch", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+
+# Mediatek generic touch panel
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="mtk-tpd", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
