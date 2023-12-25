@@ -34,3 +34,6 @@ ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="omnivisi
 
 # Mediatek generic touch panel
 ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="mtk-tpd", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+
+# Focaltech FTS
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="fts", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
