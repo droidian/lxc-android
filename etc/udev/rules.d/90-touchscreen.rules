@@ -40,3 +40,6 @@ ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="fts", EN
 
 # Synaptics S3320
 ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="synaptics,s3320", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
+
+# Samsung Electronics Touchscreen
+ACTION=="add", KERNEL=="input[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="sec_touchscreen", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1"
