@@ -11,6 +11,20 @@ fi
 
 [ ! -z "$ab_slot_suffix" ] && echo "A/B slot system detected! Slot suffix is $ab_slot_suffix"
 
+if [ "$ab_slot_suffix" == "_a" ]; then
+    secondary_slot_suffix="_b"
+elif [ "$ab_slot_suffix" == "_b" ]; then
+    secondary_slot_suffix="_a"
+fi
+
+validate_vendor() {
+    if [ -e "/vendor/build.prop" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 find_partition_path() {
     label=$1
     path="/dev/$label"
@@ -61,8 +75,28 @@ for image in $vendor_images; do
     if [ -e $image ]; then
         echo "mounting vendor from $image"
         mount $image /vendor -o ro
+
+        if validate_vendor; then
+            echo "found valid vendor partition: $image"
+        else
+            echo "$image is not a valid vendor partition"
+            umount /vendor
+        fi
     fi
 done
+
+if ! validate_vendor; then
+    echo "no valid vendor found, trying with secondary A/B suffix ${secondary_slot_suffix}"
+    ab_slot_suffix=${secondary_slot_suffix}
+    mount "/dev/mapper/dynpart-vendor${ab_slot_suffix}" /vendor -o ro
+
+    if validate_vendor; then
+        echo "found valid vendor partition: /dev/mapper/dynpart-vendor${ab_slot_suffix}"
+    else
+        echo "could not find any valid vendor partition"
+        umount /vendor
+    fi
+fi
 
 vendor_dlkm_images="/dev/mapper/dynpart-vendor_dlkm /dev/mapper/dynpart-vendor_dlkm${ab_slot_suffix}"
 for image in $vendor_dlkm_images; do
