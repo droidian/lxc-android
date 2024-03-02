@@ -11,20 +11,6 @@ fi
 
 [ ! -z "$ab_slot_suffix" ] && echo "A/B slot system detected! Slot suffix is $ab_slot_suffix"
 
-if [ "$ab_slot_suffix" == "_a" ]; then
-    secondary_slot_suffix="_b"
-elif [ "$ab_slot_suffix" == "_b" ]; then
-    secondary_slot_suffix="_a"
-fi
-
-validate_vendor() {
-    if [ -e "/vendor/build.prop" ]; then
-        return 0
-    else
-        return 1
-    fi
-}
-
 find_partition_path() {
     label=$1
     path="/dev/$label"
@@ -70,14 +56,15 @@ fi
 
 echo "checking for vendor mount point"
 
-vendor_images="/userdata/vendor.img /var/lib/lxc/android/vendor.img /dev/mapper/dynpart-vendor /dev/mapper/dynpart-vendor${ab_slot_suffix}"
+vendor_images="/userdata/vendor.img /var/lib/lxc/android/vendor.img /dev/disk/by-partlabel/vendor${ab_slot_suffix} /dev/disk/by-partlabel/vendor_a /dev/disk/by-partlabel/vendor_b /dev/mapper/dynpart-vendor /dev/mapper/dynpart-vendor${ab_slot_suffix} /dev/mapper/dynpart-vendor_a /dev/mapper/dynpart-vendor_b"
 for image in $vendor_images; do
     if [ -e $image ]; then
         echo "mounting vendor from $image"
         mount $image /vendor -o ro
 
-        if validate_vendor; then
+        if [ -e "/vendor/build.prop" ]; then
             echo "found valid vendor partition: $image"
+            break
         else
             echo "$image is not a valid vendor partition"
             umount /vendor
@@ -85,24 +72,19 @@ for image in $vendor_images; do
     fi
 done
 
-if ! validate_vendor; then
-    echo "no valid vendor found, trying with secondary A/B suffix ${secondary_slot_suffix}"
-    ab_slot_suffix=${secondary_slot_suffix}
-    mount "/dev/mapper/dynpart-vendor${ab_slot_suffix}" /vendor -o ro
-
-    if validate_vendor; then
-        echo "found valid vendor partition: /dev/mapper/dynpart-vendor${ab_slot_suffix}"
-    else
-        echo "could not find any valid vendor partition"
-        umount /vendor
-    fi
-fi
-
-vendor_dlkm_images="/dev/mapper/dynpart-vendor_dlkm /dev/mapper/dynpart-vendor_dlkm${ab_slot_suffix}"
+vendor_dlkm_images="/dev/mapper/dynpart-vendor_dlkm /dev/mapper/dynpart-vendor_dlkm${ab_slot_suffix} /dev/mapper/dynpart-vendor_dlkm_a /dev/mapper/dynpart-vendor_dlkm_b"
 for image in $vendor_dlkm_images; do
     if [ -e $image ]; then
         echo "mounting vendor_dlkm from $image"
         mount $image /vendor_dlkm -o ro
+
+        if [ -e "/vendor_dlkm/etc/build.prop" ]; then
+            echo "found valid vendor_dlkm partition: $image"
+            break
+        else
+            echo "$image is not a valid vendor_dlkm partition"
+            umount /vendor_dlkm
+        fi
     fi
 done
 
