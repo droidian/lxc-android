@@ -127,8 +127,18 @@ if [ -d "/usr/lib/droid-system-overlay" ]; then
     echo "mounting android's system overlay"
     if [ $(uname -r | cut -d "." -f 1) -ge "4" ]; then
         mount -t overlay overlay -o lowerdir=/usr/lib/droid-system-overlay:/var/lib/lxc/android/rootfs/system /var/lib/lxc/android/rootfs/system
+        echo "overlayed on /var/lib/lxc/android/rootfs/system"
+        if [ -d "/android/system" ]; then
+            mount -t overlay overlay -o lowerdir=/usr/lib/droid-system-overlay:/android/system /android/system
+            echo "overlayed on /android/system"
+        fi
     else
         mount -t overlay overlay -o lowerdir=/var/lib/lxc/android/rootfs/system,upperdir=/usr/lib/droid-system-overlay,workdir=/var/lib/lxc/android/ /var/lib/lxc/android/rootfs/system
+        echo "overlayed on /var/lib/lxc/android/rootfs/system"
+        if [ -d "/android/system" ]; then
+            mount -t overlay overlay -o lowerdir=/android/system,upperdir=/usr/lib/droid-system-overlay,workdir=/android/ /android/system
+            echo "overlayed on /android/system"
+        fi
     fi
 fi
 
