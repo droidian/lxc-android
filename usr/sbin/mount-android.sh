@@ -39,6 +39,46 @@ parse_mount_flags() {
     echo $options
 }
 
+get_apex_payload_offset() {
+    apex_file="$1"
+    python3 -c "
+import zipfile
+
+def calculate_offset(apex_path):
+    with zipfile.ZipFile(apex_path, 'r') as zf:
+        try:
+            with zf.open('apex_payload.img') as f:
+                return f._orig_compress_start
+        except KeyError:
+            pass
+    return 0 # apex_payload.img not found
+
+print(calculate_offset('$apex_file'))
+" 2>/dev/null || echo 0
+}
+
+mount_apex() {
+    source_path="$1"
+    target_path="$2"
+
+    if [ -d "$source_path" ]; then
+        # Directory-based APEX
+        mkdir -p "$target_path"
+        echo "Mounting flattened APEX $source_path to $target_path"
+        mount -o bind "$source_path" "$target_path"
+    elif [ -f "$source_path" ] && [[ "$source_path" == *.apex ]]; then
+        # File-based APEX
+        mkdir -p "$target_path"
+        offset=$(get_apex_payload_offset "$source_path")
+        if [ "$offset" -eq 0 ]; then
+            log "Unable to determine offset for APEX file $source_path, skipping"
+            return
+        fi
+        echo "Mounting APEX file $source_path to $target_path with offset $offset"
+        mount -o loop,offset=${offset},ro "$source_path" "$target_path"
+    fi
+}
+
 if [ -n "${BIND_MOUNT_PATH}" ] && ! mountpoint -q -- "${BIND_MOUNT_PATH}"; then
     android_images="/userdata/android-rootfs.img /var/lib/lxc/android/android-rootfs.img"
     for image in ${android_images}; do
@@ -196,3 +236,26 @@ cat ${fstab} ${EXTRA_FSTAB} | while read line; do
         mount -o bind ${2} "${BIND_MOUNT_PATH}/${2}"
     fi
 done
+
+if [ -d /android/apex ]; then
+    echo "Handling /android/apex mounts"
+
+    mount -t tmpfs android_apex /android/apex
+
+    for apex_dir in "/android/system/apex" "/android/system_ext/apex"; do
+        [ -d "$apex_dir" ] || continue
+
+        for apex_entry in "$apex_dir"/*; do
+            # Extract APEX name (remove directory suffixes and .apex extension)
+            apex_name=$(basename "$apex_entry" | sed 's/\.\(release\|debug\|apex\)$//')
+            target_path="/android/apex/${apex_name}"
+
+            case "$apex_name" in
+                com.android.runtime|com.android.art|com.android.i18n|com.android.vndk.*)
+                    mount_apex "$apex_entry" "$target_path"
+                    ;;
+            esac
+        done
+    done
+fi
+
