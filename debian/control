@@ -12,6 +12,7 @@ Package: lxc-android
 Architecture: all
 Depends: adduser,
          cpio,
+         droidian-apex-manager,
          lxc,
          libc-bin,
          halium-wrappers (>= 5),
