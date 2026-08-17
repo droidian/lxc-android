@@ -181,3 +181,14 @@ cat ${fstab} ${EXTRA_FSTAB} | while read line; do
         mount -o bind ${2} "${BIND_MOUNT_PATH}/${2}"
     fi
 done
+
+# Prepare the host APEX tree before it is bind-mounted into the container.
+if [ -e /apex ]; then
+    if ! mountpoint -q -- /apex; then
+        echo "mounting tmpfs on /apex"
+        mount -t tmpfs tmpfs /apex
+    fi
+
+    echo "finding and mounting APEXs"
+    /usr/sbin/droidian-apex mount --all
+fi
