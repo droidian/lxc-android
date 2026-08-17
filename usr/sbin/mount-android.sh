@@ -143,26 +143,31 @@ if [ -d "/usr/lib/droid-vendor-overlay" ]; then
 fi
 
 # Assume there's only one fstab in vendor
-fstab=$(ls /vendor/etc/fstab*)
-[ -z "$fstab" ] && echo "fstab not found" && exit
+set -- /vendor/etc/fstab*
+[ ! -e "$1" ] && echo "fstab not found" && exit 1
+fstab=$1
 
 echo "checking fstab $fstab for additional mount points"
 
 cat ${fstab} ${EXTRA_FSTAB} | while read line; do
     set -- $line
 
-    # stop processing if we hit the "#endhalium" comment in the file
-    echo $1 | egrep -q "^#endhalium" && break
+    case $1 in
+        \#endhalium*) break ;; # stop processing if we hit the "#endhalium" comment in the file
+        \#*|"") continue ;; # Skip any unwanted entry
+    esac
 
-    # Skip any unwanted entry
-    echo $1 | egrep -q "^#" && continue
     ([ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]) && continue
-    ([ "$2" = "/system" ] || [ "$2" = "/data" ] || [ "$2" = "/" ] \
-    || [ "$2" = "auto" ] || [ "$2" = "/vendor" ] || [ "$2" = "none" ] \
-    || [ "$2" = "/misc" ] || [ "$2" = "/system_ext" ] || [ "$2" = "/product" ]) && continue
-    ([ "$3" = "emmc" ] || [ "$3" = "swap" ] || [ "$3" = "mtd" ]) && continue
 
-    label=$(echo $1 | awk -F/ '{print $NF}')
+    case $2 in
+        /system|/data|/|auto|/vendor|none|/misc|/system_ext|/product) continue ;;
+    esac
+
+    case $3 in
+        emmc|swap|mtd) continue ;;
+    esac
+
+    label=${1##*/}
     [ -z "$label" ] && continue
 
     echo "checking mount label $label"
